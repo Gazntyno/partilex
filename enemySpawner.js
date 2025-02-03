@@ -11,11 +11,11 @@ export class EnemySpawner {
    * @param {number} options.maxEnemies - Maximum number of enemies allowed at once (default: 10).
    */
   constructor(options = {}) {
-    this.spawnInterval = options.spawnInterval || 2000; // ms between spawns
+    this.spawnInterval = options.spawnInterval || 800; // ms between spawns
     // distance from player
     this.spawnMinDistance = options.spawnMinDistance || 300;
     this.spawnMaxDistance = options.spawnMaxDistance || 400;
-    this.maxEnemies = options.maxEnemies || 40;
+    this.maxEnemies = options.maxEnemies || 140;
     this.lastSpawnTime = 0;
   }
 

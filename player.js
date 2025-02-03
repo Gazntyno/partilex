@@ -23,16 +23,19 @@ export class Player {
     this.mesh.scale.set(10, 10, 10);
     this.mesh.rotation.x = -Math.PI / 4;
 
+    this.boundingRadius = 7;
+
     // Movement flags and speed
     this.moveLeft = false;
     this.moveRight = false;
     this.moveUp = false;
     this.moveDown = false;
     this.speed = 1.8;
+    this.health = 4;
 
     this.weapons = [
-        new BasicWeapon(1000),
         new ARWeapon(80,0),
+        new BasicWeapon(1000),
     ];
 
     this.currentWeaponIndex = 0;
@@ -127,5 +130,13 @@ export class Player {
     }
     this.weapon = this.weapons[this.currentWeaponIndex];
     console.log("Switched to weapon index:", this.currentWeaponIndex);
+  }
+
+  takeDamage(amount) {
+    this.health -= amount;
+    console.log(`Player took ${amount} damage. Remaining health: ${this.health}`);
+    if (this.health <= 0) {
+      console.log("Game over");
+    }
   }
 }
