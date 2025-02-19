@@ -1,6 +1,6 @@
 // player.js
 import * as THREE from "../three.js-master/build/three.module.js";
-import { BasicWeapon, ARWeapon } from "./weapon.js";
+import { BasicWeapon, ARWeapon, SniperWeapon } from "./weapon.js";
 
 export class Player {
   constructor() {
@@ -35,7 +35,8 @@ export class Player {
 
     this.weapons = [
         new ARWeapon(80,0),
-        new BasicWeapon(1000),
+        new BasicWeapon(400),
+        new SniperWeapon(1200),
     ];
 
     this.currentWeaponIndex = 0;

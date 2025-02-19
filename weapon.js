@@ -26,7 +26,7 @@ export class Weapon {
 
 // A basic weapon that simply uses the base shoot method.
 export class BasicWeapon extends Weapon {
-  constructor(fireRate = 1000) {
+  constructor(fireRate = 500) {
     super(fireRate);
   }
 }
@@ -63,6 +63,24 @@ export class ARWeapon extends Weapon {
     }
   }
 
+  export class SniperWeapon extends Weapon {
+    constructor(fireRate = 1000) {
+      super(fireRate);
+    }
+    
+    shoot(origin, direction, scene) {
+      const currentTime = performance.now();
+      if (currentTime - this.lastShotTime < this.fireRate) {
+        return null;
+      }
+      this.lastShotTime = currentTime;
+      
+      // Create a new bullet and add it to the scene.
+      const bullet = new sniperBullet(origin, direction);
+      scene.add(bullet.mesh);
+      return bullet;
+    }
+  }
 // Bullet class: a simple projectile.
 export class Bullet {
   constructor(origin, direction, speed = 1000, lifetime = 3000) {
@@ -74,22 +92,15 @@ export class Bullet {
     // Set its initial position
     this.mesh.position.copy(origin);
     
-    // Direction should be normalized
+    this.damage = 1;
     this.direction = direction.clone().normalize();
-    
-    // How fast the bullet moves
     this.speed = speed;
-    
-    // Record when the bullet was spawned and its lifetime
     this.spawnTime = performance.now();
     this.lifetime = lifetime;
-    this.damage = 1;
   }
   
   update(deltaTime) {
-    // debuggin 
-    //console.log("Bullet updating, current position:", deltaTime);
-    // Move the bullet along its direction // you could scale this by time if needed
+    // Move the bullet along its direction
     this.mesh.position.add(this.direction.clone().multiplyScalar(this.speed * deltaTime));
   }
   
@@ -98,3 +109,14 @@ export class Bullet {
     return (performance.now() - this.spawnTime) > this.lifetime;
   }
 }
+
+export class sniperBullet extends Bullet {
+  constructor(origin, direction, speed = 1000, lifetime = 3000) {
+    super(origin, direction, speed, lifetime);
+    this.mesh.material.color.set("green");
+    this.mesh.scale.set(3, 4, 7);
+    this.damage = 4;
+  }
+}
+
+  
